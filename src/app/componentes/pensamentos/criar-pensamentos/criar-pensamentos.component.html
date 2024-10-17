@@ -5,35 +5,44 @@
       novo pensamento:
     </h2>
   </header>
-  <form>
+  <form [formGroup]="formulario">
     <label for="pensamento">Pensamento</label>
     <input
       type="textarea"
-      name="pensamento"
+      formControlName="conteudo"
       id="pensamento"
       class="input"
       placeholder="Digite seu pensamento:"
-      [(ngModel)]="pensamento.conteudo"
+      
     />
+    <div class="mensagem__erro" *ngIf="formulario.get('conteudo')?.errors?.['required'] && formulario.get('conteudo')?.touched">
+      O conteúdo é obrigatório!
+    </div>
     <label for="autoria">Autoria ou fonte</label>
     <input
       type="text"
-      name="autoria"
+      formControlName="autoria"
       id="autoria"
       class="input"
       placeholder="Digite a autoria ou fonte:"
-      [(ngModel)]="pensamento.autoria"
+      
     />
+    <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['required'] && formulario.get('autoria')?.touched">
+      A autoria é obrigatória!
+    </div>
+    <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['minlenght'] && formulario.get('autoria')?.touched">
+      A autoria deve conter no mínimo 3 caracteres!
+    </div>
 
     <div class="container-radio">
       <div class="radio-modelo">
         <label for="modelo1"
           ><input
             type="radio"
-            name="modelo-card"
+            formControlName="modelo"
             value="modelo1"
             id="modelo1"
-            [(ngModel)]="pensamento.modelo"
+            
           />
           <div class="custom-radio">
             <span></span>
@@ -43,9 +52,9 @@
         Prévia 1:
         <div class="modelo modelo1 ff-roboto-mono">
           <img src="../../../../assets/imagens/modelo1.png" alt="Aspas azuis" />
-          <p class="conteudo">{{ pensamento.conteudo }}</p>
+          <p class="conteudo">{{ formulario.get('conteudo')?.value }}</p>
           <p class="autoria">
-            <b>{{ pensamento.autoria }}</b>
+            <b>{{ formulario.get('autoria')?.value }}</b>
           </p>
         </div>
       </div>
@@ -54,10 +63,10 @@
         <label for="modelo2"
           ><input
             type="radio"
-            name="modelo-card"
+            formControlName="modelo"
             value="modelo2"
             id="modelo2"
-            [(ngModel)]="pensamento.modelo"
+            
           />
           <div class="custom-radio">
             <span></span>
@@ -70,9 +79,9 @@
             src="../../../../assets/imagens/modelo2.png"
             alt="Aspas azuis claras"
           />
-          <p class="conteudo">{{ pensamento.conteudo }}</p>
+          <p class="conteudo">{{ formulario.get('conteudo')?.value }}</p>
           <p class="autoria">
-            <b>{{ pensamento.autoria }}</b>
+            <b>{{ formulario.get('autoria')?.value }}</b>
           </p>
         </div>
       </div>
@@ -81,10 +90,10 @@
         <label for="modelo3"
           ><input
             type="radio"
-            name="modelo-card"
+            formControlName="modelo"
             value="modelo3"
             id="modelo3"
-            [(ngModel)]="pensamento.modelo"
+            
           />
           <div class="custom-radio">
             <span></span>
@@ -97,15 +106,15 @@
             src="../../../../assets/imagens/modelo3.png"
             alt="Aspas verdes"
           />
-          <p class="conteudo">{{ pensamento.conteudo }}</p>
+          <p class="conteudo">{{ formulario.get('conteudo')?.value }}</p>
           <p class="autoria">
-            <b>{{ pensamento.autoria }}</b>
+            <b>{{ formulario.get('autoria')?.value }}</b>
           </p>
         </div>
       </div>
     </div>
     <div class="acoes">
-      <button (click)="criarNovoPensamento()" class="botao">Salvar</button>
+      <button [disabled]="!formulario.valid" [ngClass]="!formulario.valid ? 'botao' : 'botao__desabilitado'" (click)="criarNovoPensamento()">Salvar</button>
       <button (click)='cancelarNovoPensamento()' class="botao">Cancelar</button>
     </div>
   </form>
