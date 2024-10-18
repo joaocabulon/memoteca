@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Pensamento } from '../pensamento';
 import { PensamentoService } from '../pensamento.service';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,8 +16,13 @@ export class CriarPensamentosComponent implements OnInit {
 
   ngOnInit(): void {
     this.formulario = this.formBuilder.group({
-      conteudo: ['Formulario Reativo', Validators.compose([Validators.required, Validators.pattern(/(.|\s)*\S(.|\s)*/), ])],
-      autoria: ['', Validators.compose([Validators.minLength(3), Validators.required])], 
+      conteudo: ['', Validators.compose(
+        [
+          Validators.required, 
+          Validators.pattern(/(.|\s)*\S(.|\s)*/)
+        ]
+      )],
+      autoria: ['', Validators.compose([Validators.minLength(3), Validators.required, Validators.pattern('^[a-z]+$')])], 
       modelo: ['modelo1']
     })
   }
@@ -29,6 +33,7 @@ export class CriarPensamentosComponent implements OnInit {
   }
   cancelarNovoPensamento() {
     alert("Canceled")
+    this.router.navigate(['/listarPensamento'])
   }
 
 }

@@ -30,8 +30,11 @@
     <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['required'] && formulario.get('autoria')?.touched">
       A autoria é obrigatória!
     </div>
-    <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['minlenght'] && formulario.get('autoria')?.touched">
+    <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['minlength'] && formulario.get('autoria')?.touched">
       A autoria deve conter no mínimo 3 caracteres!
+    </div>
+    <div class="mensagem__erro" *ngIf="formulario.get('autoria')?.errors?.['pattern'] && formulario.get('autoria')?.touched">
+      A autoria deve conter somente letras minúsculos!
     </div>
 
     <div class="container-radio">
@@ -114,7 +117,7 @@
       </div>
     </div>
     <div class="acoes">
-      <button [disabled]="!formulario.valid" [ngClass]="!formulario.valid ? 'botao' : 'botao__desabilitado'" (click)="criarNovoPensamento()">Salvar</button>
+      <button [disabled]="!formulario.valid" [ngClass]="formulario.valid ? 'botao' : 'botao__desabilitado'" (click)="criarNovoPensamento()">Salvar</button>
       <button (click)='cancelarNovoPensamento()' class="botao">Cancelar</button>
     </div>
   </form>
